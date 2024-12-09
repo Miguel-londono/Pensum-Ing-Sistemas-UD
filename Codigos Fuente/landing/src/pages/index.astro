@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { Hero } from '../components/Hero.jsx'
+import { Navbar } from '../components/Navbar.jsx'
+import { Motivos } from '../components/Motivos.jsx'
+import { Motivos2 } from '../components/Motivos2.jsx'
+import { Beneficios } from '../components/Beneficios.jsx'
+import { Ejes } from '../components/Ejes.jsx'
+import { Flexibilidad } from '../components/Flexibilidad.jsx'
+import { Preguntas } from '../components/Preguntas.jsx'
+import { Actualizacion } from '../components/Actualizacion.jsx'
+import { ScrollUpButton } from '../components/ScrollUpButton'
+import '../styles/Theme.css'
+import '../styles/Diagonals.css'
+---
+
+<Layout title="Reforma Ingenieria de Sistemas">
+  <Navbar client:load />
+  <Hero client:load />
+  <Motivos client:load />
+  <Motivos2 client:load />
+  <Ejes client:load />
+  <Flexibilidad client:load />
+  <Beneficios client:load />
+  <Actualizacion client:load />
+  <Preguntas client:load /> 
+  <ScrollUpButton client:load />
+</Layout>

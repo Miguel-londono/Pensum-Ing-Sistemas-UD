@@ -1,0 +1,10 @@
+Se entrega dos carpetas, codigo fuente, y buid de las mismas. 
+
+Paginas realizadas en ASTRO y React
+
+
+1. Para instalar los modulos de recomienda usar: npm i --force
+
+2. Para ejecutar el sitio local: npm run dev para astro para react rpm start
+
+3. Para crear el Build: npm run build.

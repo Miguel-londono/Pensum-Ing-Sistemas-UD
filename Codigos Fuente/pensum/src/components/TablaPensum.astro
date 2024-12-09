@@ -1,0 +1,177 @@
+---
+//Se importa la información de todas las materias del pensum
+import niveles from '@/data/infoMaterias'
+import Materia from './Materia.astro'
+
+// Arreglo dónde se guardarán la suma de los datos de las materias
+let datosTotales: {
+  tdTotal: number
+  tcTotal: number
+  taTotal: number
+  creditosTotal: number
+}[] = []
+
+let creditosTotales = 0;
+
+// Se itera cada nivel y se guardan en un objeto "totalMaterias" la suma de los datos todas las materias de ese nivel
+niveles.forEach((nivel) => {
+  let suma = nivel.materias.reduce(
+    (totalMaterias, materia) => {
+            
+        totalMaterias.tdTotal += materia.td!==undefined?materia.td:0
+        totalMaterias.tcTotal += materia.tc!==undefined?materia.tc:0
+        totalMaterias.taTotal += materia.ta!==undefined?materia.ta:0
+        
+        totalMaterias.creditosTotal += materia.creditos!==undefined?materia.creditos:0
+        creditosTotales+=materia.creditos!==undefined?materia.creditos:0
+
+      return totalMaterias
+    },
+
+    { tdTotal: 0, tcTotal: 0, taTotal: 0, creditosTotal: 0 }
+  )
+
+  //Se anida al arreglo datosTotales la suma de los datos del nivel
+  datosTotales.push(suma)
+})
+---
+
+<div id='pensum'>
+  {
+    niveles.map((nivel, index) => {
+      return (
+        <div class='nivel'>
+          <h2>{nivel.nombre}</h2>
+
+          <div class='materias'>
+            {nivel.materias.map((materia) => (
+              <Materia {...materia} />
+            ))}
+          </div>
+
+          <table class='total'>
+            <thead>
+              <tr>
+                <th title='Trabajo Presencial Directo'>TD</th>
+                <th title='Trabajo Mediado_Cooperativo'>TC</th>
+                <th title='Trabajo Autónomo'>TA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{datosTotales[index].tdTotal}</td>
+                <td>{datosTotales[index].tcTotal}</td>
+                <td>{datosTotales[index].taTotal}</td>
+              </tr>
+              <tr>
+                <td colspan='3'>
+                  Créditos: {datosTotales[index].creditosTotal}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )
+    })
+  }
+</div>
+<p>Total de Créditos: {creditosTotales}</p>
+
+<style>
+  h2 {
+    text-align: center;
+    margin: 0;
+  }
+
+  #pensum {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 14px;
+    max-width: 2200px;
+  }
+
+  .nivel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .materias {
+    justify-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+    min-width: 100%;
+  }
+
+  .total {
+    text-align: center;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 1.8em;
+    background-color: #fff;
+  }
+
+  .total td, th {
+    border: 1px black solid;
+  }
+
+  .total th {
+    cursor: help;
+    background-color: #ddd;
+  }
+
+  .total tr:last-child {
+    background-color: #ddd;
+  }
+
+  p{
+    text-align: center;
+    font-size: 2em;
+    font-weight: 600;
+    border: 3px black solid;
+    background-color: rgba(255, 255, 255, 0.6);
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  @media screen and (max-width: 1270px) {
+    #pensum {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    p{
+      font-size: 1.5em;
+      margin: 50px auto;
+    }
+  }
+
+  @media screen and (max-width: 840px) {
+    h2 {
+      margin: 1rem 0;
+    }
+
+    .total {
+      margin: 0;
+    }
+
+    #pensum {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    #pensum .nivel:last-child{
+      width: 50%;
+      place-self: center;
+      grid-column: span 2;
+    }
+
+    p{
+      font-size: 1.3em;
+    }
+  }
+</style>

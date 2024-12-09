@@ -1,0 +1,96 @@
+---
+import Materia from '@/components/Materia.astro'
+import ModalPDF from '@/components/ModalPDF.astro'
+import Layout from '@/layouts/Layout.astro'
+import {obtenerMateria, obtenerMaterias} from '@/services/materiasElectivas'
+import { type MateriaType } from '@/types/informacion'
+
+//Se generan las rutas con el codigo de cada espacio que tenga opciones
+export function getStaticPaths() {
+  return obtenerMaterias().map((electiva)=>{
+    return {params: {codigo: electiva.codigo}}
+  })
+}
+
+//Se obtiene el código de la materia
+const { codigo } = Astro.params
+
+//Se busca la materia con sus respectivas electivas
+const materia = obtenerMateria(codigo||'')
+
+---
+
+<Layout title={materia?.nombre||'Electiva'}>
+    <div id="contenedor">
+    <h1 transition:name={materia?.nombre}>{materia?.nombre}</h1>
+    <div id="opciones">
+        {
+            materia?.electivas?.map((electiva=>{
+
+                let infoElectiva: MateriaType = {td: materia.td, tc: materia.tc, ta: materia.ta , creditos: materia.creditos, ...electiva}
+
+                return (
+                    <Materia  {...infoElectiva}/> 
+                )
+            }))
+        }
+    </div>
+
+    <a href="/">Volver</a>
+    <ModalPDF/>
+</div>
+</Layout>
+
+<style>
+
+    #contenedor{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    h1{
+        text-align: center;
+    }
+
+    #opciones{
+        padding: 50px;
+        display: flex;
+        gap: 10%;
+        width: 80%;
+    }
+
+    a{
+        display: inline-block;
+        text-decoration: none;
+        color: #fff;
+        font-weight: 600;
+        background-color: #333;
+        margin: 20px 0;
+        text-transform: uppercase;
+        padding: 7px 14px;
+        border-radius: 4px;
+        transition: 0.2s all;
+    }
+
+    a:hover{
+        transform: scale(1.05);
+        box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.5);
+
+    }
+
+    @media screen and (max-width: 1200px){
+
+        h1{
+            font-size: 1.5em;
+        }
+
+        #opciones{
+            flex-direction: column;
+            padding: 20px 40px;
+            gap: 30px;
+        }
+    }
+
+</style>

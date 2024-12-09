@@ -1,0 +1,220 @@
+---
+import { type MateriaType } from '@/types/informacion'
+
+interface Props extends MateriaType {}
+
+//Props del componente
+const { codigo, nombre, creditos, td, tc, ta, urlSyllabus, tipo, info } =
+  Astro.props
+---
+
+<a
+  class='materia'
+  href={tipo === 'AI' ? `electiva/${codigo}` : urlSyllabus}
+  data-name={nombre}
+  data-type={tipo}
+  data-code={codigo}
+  data-tipo={tipo}
+>
+  <div class='cod'><span>Código: </span>{codigo}</div>
+
+  <!-- Se quita temporalmente los siguientes campos hasta definir una estructura concreta -->
+
+  <!-- <div class='pre'><span>Pre:</span></div>
+  <div class='corr'><span>Corr:</span></div> -->
+
+  <div class='creditos'><span>Créditos: </span>{creditos}</div>
+  <div class='horas'>
+    <div class='directo'><span>TD: </span>{td}</div>
+    <div class='colaborativo'><span>TC: </span>{tc}</div>
+    <div class='autonomo'><span>TA: </span>{ta}</div>
+  </div>
+  <div transition:name={nombre} class={'nombre ' + tipo}>
+    {nombre}
+    <span>{info}</span>
+  </div>
+</a>
+
+<script>
+  //Se envuelve el script en un eventListener de Astro para evitar la perdida de acción por las transiciones
+  document.addEventListener('astro:page-load', () => {
+    //Función para saber si el usuario está en un navegador móvil.
+    function isMobile() {
+      return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(
+        navigator.userAgent
+      )
+    }
+
+    //Se seleccionan todas las materias para asignarles el evento necesario según corresponda el tipo (EX, AI o el resto)
+    document.querySelectorAll('.materia').forEach((materia) => {
+      //Se obtiene el tipo del atributo data-type
+      let tipo = materia.getAttribute('data-type')
+
+      //Se previene dar comportamiento si existe alguna materia sin tipo o si es AI (se deja el anchor por defecto)
+      if (!tipo || tipo == 'AI') {
+      }
+      //Si es EX no se le asigna eventListener
+      else if (tipo == 'EX') {
+        materia.addEventListener('click', (event) => {
+          event.preventDefault()
+          alert(
+            '¡Puedes inscribir materias extrínsecas de cualquier proyecto curricular!'
+          )
+        })
+      }
+      //Para las demás se muestra una ventana modal con su syllabus
+      else {
+        //Se da comportamiento para mostrar la ventana modal si no está en un dispositivo móvil
+
+        //Se obtiene la url del PDF
+        let url = materia.getAttribute('href') || ''
+
+        if (!isMobile()) {
+          materia.addEventListener('click', (event) => {
+            event.preventDefault()
+
+            //Se lleva hacia la parte superior del sitio
+            scrollTo({ top: 0 })
+
+            //Se quita temporalmente el scroll al sitio
+            document.body.style.overflow = 'hidden'
+
+            const pdfView = document.querySelector('#modal-pdf')
+
+            let titulo = pdfView?.querySelector('h2')
+            //Se le pone el título de la materia a la ventana modal
+            if (titulo) {
+              titulo.innerText = materia.getAttribute('data-name') || ''
+            }
+
+            let visualizador: HTMLImageElement | HTMLIFrameElement
+
+            //Si hay url de PDF se crea un iframe y se agrega a la modal
+            if (url !== '') {
+              visualizador = document.createElement('iframe')
+              visualizador.src = url
+            }
+
+            //Si no se crea un img y se agrega a la modal
+            else {
+              visualizador = document.createElement('img')
+              visualizador.src = '/images/construccion.png'
+            }
+
+            visualizador.id = 'visualizador'
+
+            pdfView?.appendChild(visualizador)
+
+            //Se establece el modal como abierto
+            pdfView?.setAttribute('data-mode', 'open')
+          })
+        } else {
+          if (url=='') {
+            materia.setAttribute('href', '/images/construccion.png')
+          }
+        }
+      }
+    })
+  })
+</script>
+
+<style>
+  .materia {
+    transition: opacity 0.3s ease;
+  }
+  a {
+    display: block;
+    text-decoration: none;
+    color: black;
+  }
+
+  .materia {
+    border: 1px black solid;
+    width: auto;
+    background-color: #fff;
+  }
+
+  .materia div {
+    padding: 0 4px;
+    width: 100%;
+    border: 1px black solid;
+  }
+
+  span {
+    font-weight: 500;
+  }
+
+  .materia {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.7rem;
+    height: 140px;
+    width: 100%;
+    transition: 0.2s all;
+  }
+
+  .materia:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 0 0 8px 0.5px rgb(0, 0, 0, 0.5);
+  }
+
+  .nombre {
+    display: grid;
+    place-content: center;
+    text-align: center;
+    flex-grow: 1;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 2px;
+    justify-self: center;
+  }
+
+  .nombre span {
+    font-size: 0.9em;
+  }
+
+  .horas {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .horas div {
+    border: none;
+  }
+
+  .CO {
+    background-color: #ff7a7a;
+  }
+
+  .CB {
+    background-color: #81f0fa;
+  }
+
+  .BI {
+    background-color: #a4d175;
+  }
+
+  .AI,
+  .OPCION {
+    background-color: #b77ecb;
+  }
+
+  .EX {
+    background-color: #ffac52;
+  }
+
+  @media screen and (max-width: 1300px) {
+    .materia {
+      height: 150px;
+    }
+
+    .materia div {
+      padding: 0 2px;
+    }
+
+    .nombre {
+      padding: 1px;
+    }
+  }
+</style>

@@ -1,0 +1,61 @@
+.barra-categorias {
+    display: flex;
+    gap: 18px;
+    padding: 10px;
+    border-radius: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .categoria {
+    padding: 6px 12px;
+    color: black;
+    font-size: 1em;
+    font-weight: 600;
+    border: 2px solid black;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .categoria:hover {
+    /* Aumenta el tamaño del botón al pasar el cursor */
+    transform: scale(1.05); 
+  }
+
+  .categoria.activo {
+    /* Sombra para indicar el filtro activo */
+    box-shadow: 0 0 8px 4px rgba(0,0,0,0.5); 
+
+    /* Aumenta el tamaño del botón cuando está activo */
+    transform: scale(1.1); 
+  }
+
+  /* Colores de fondo específicos para cada categoría */
+  .CO {
+    background-color: #ff7a7a;
+  }
+
+  .CB {
+    background-color: #81f0fa;
+  }
+
+  .BI {
+    background-color: #a4d175;
+  }
+
+  .AI, .OPCION {
+    background-color: #b77ecb;
+  }
+
+  .EX {
+    background-color: #ffac52;
+  }
+
+  @media screen and (max-width: 840px) {
+    .categoria{
+        width: 90%;
+    }
+}

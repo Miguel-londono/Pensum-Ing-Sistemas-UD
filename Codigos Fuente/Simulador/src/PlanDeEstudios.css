@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  background: 
+        linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
+        url('../public/logo.svg');
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed; 
+  background-position: center; 
+  margin: 0; 
+  height: 100vh; 
+}
+
+#contenedorSimulacion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plan-de-estudios {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 45px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+}
+
+h2 {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 22px;
+  color: rgb(63, 64, 66);
+  text-align: center;
+  margin-top: 10px;
+}
+
+#resultados {
+  text-align: center;
+}
+
+#resultados p {
+  color: rgb(174 178 183);
+}
+
+#resultados strong {
+  color: #fff;
+}
+
+.nivel-columna {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 150px;
+}
+
+.nivel-columna h3, .cerrar-modal {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  color: #000;
+  background-color: rgb(255, 255, 255);
+  padding: 5px;
+  border: #000 2px solid;
+  border-radius: 5px;
+  width: 100%;
+  transition: 0.2s all;
+}
+
+.nivel-columna h3:hover, .cerrar-modal:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 0 0 8px 0.5px rgb(0, 0, 0, 0.5);
+}
+
+.materia {
+  transition: opacity 0.3s ease;
+  border: 1px black solid;
+  width: auto;
+  background-color: #fff;
+}
+
+.materia {
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  background-color: rgb(99, 99, 94);
+  border-style: solid;
+  border-width: 1px;
+  color: white;
+  transition: background-color 0.3s;
+  width: 100%;
+  height: 100px;
+  transition: 0.2s all;
+}
+
+.materia input[type="checkbox"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; 
+  cursor: pointer;
+  z-index: 1; 
+}
+
+.materia.aprobada {
+  background-color: rgba(246, 178, 1, 0.7); 
+}
+
+.materia:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 0 0 8px 0.5px rgb(0, 0, 0, 0.5);
+}
+
+.creditos, .cod, .horas div{
+  padding: 0 4px;
+  border: 1px black solid;
+  background-color: #fff;
+  color: #000;
+}
+
+.horas div{ 
+  width: 100%;
+}
+
+.nombre {
+  display: grid;
+  place-content: center;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 2px;
+  border: 1px black solid;
+  height: 48%;
+}
+
+.nombre span {
+  font-size: 0.9em;
+}
+.OB{
+  background-color: #000099;
+}
+
+.OC{
+  background-color: #538dd5;
+  color: #000;
+}
+
+.EI{
+  background-color: #00b050;
+  color: #000;
+}
+
+.EE{
+  background-color: #99ff66;
+  color: #000;
+}
+.horas {
+  display: flex;
+  justify-content: space-between;
+}
+
+.boton {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  color: #000;
+  letter-spacing: 1px;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+  border: #000 2px solid;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s all;
+}
+.boton-deshabilitado {
+  display: none;
+}
+
+.boton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px 0.5px rgb(0, 0, 0, 0.5);
+}
+
+.boton:active {
+  background-color: #44944b;
+  transform: scale(1);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  font-family: 'Montserrat', sans-serif;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal-content h2{
+  color: #000;
+}
+
+.barra-progreso {
+  width: 100%; 
+  background-color: #e0e0e0; 
+  border-radius: 10px; 
+  overflow: hidden;
+  height: 20px; 
+  margin: 10px 0;
+}
+
+.relleno, .relleno-OB, .relleno-OC, .relleno-EE {
+  height: 100%;
+  background-color: #4caf50; 
+  text-align: center;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  border-radius: 10px; 
+  transition: width 0.3s ease; 
+}
+
+.relleno-OB{
+  background-color: #000099;
+  color: #ffffff;
+}
+.relleno-OC{
+  background-color: #538dd5;
+}
+.relleno-EE{
+  background-color: #99ff66;
+}
+
+@media (max-width: 1720px) {
+  .nivel-columna {
+    width: 120px;
+  }
+}
+
+@media (max-width: 1420px) {
+  .plan-de-estudios{
+    flex-wrap: wrap;
+  }
+
+  .nivel-columna{
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
+    padding-left: 5vh;
+    padding-right: 5vh;
+    box-sizing: border-box;
+  }
+  .materia, .materia.aprobada{
+    width: 150px;
+  }
+}

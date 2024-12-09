@@ -1,0 +1,30 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import { Navbar } from '../../../components/Navbar.jsx'
+import { Article } from '../../../components/Article.jsx'
+import { Footer } from '../../../components/Footer.jsx'
+import planactualizacion from "../../../assets/images/planactualizacion.png"
+import '../../../styles/Theme.css'
+import { ScrollUpButton } from '../../../components/ScrollUpButton'
+
+const articleData = {
+  title: "Doble Programa y Articulación con el Posgrado",
+  subtitle: "Rutas de formación para optimizar el tiempo de estudio y cumplir requisitos de doble programa",
+  date: "November 15, 2024",
+  image: planactualizacion.src,
+  content: `
+    <p>Después de un análisis con cada proyecto curricular, se ha diseñado una ruta de formación para el doble programa, donde el estudiante puede completar los requisitos del proyecto de Ingeniería de Sistemas a través de espacios de formación obligatorios y electivos.</p>
+    <p>Esta ruta permitirá homologar el ciclo básico y la formación en Sistemas al segundo proyecto, reduciendo el tiempo para completar ambos programas. Por ejemplo, un estudiante de Sistemas podría realizar un doble programa en Electrónica, completando una ruta en Control para cumplir los requisitos de ambos proyectos de manera optimizada.</p><br/>
+    
+    <div class="text-white text-2xl mb-4">Articulación con el Posgrado</div>
+    <p>Para facilitar el avance hacia el posgrado, el estudiante puede tomar cursos de posgrado que cumplan los requisitos de Electivos RF y Flexibles RF, dentro del cuerpo de conocimiento de su Ruta de formación seleccionada. Estos cursos podrán ser homologados al ingresar al posgrado, reduciendo así el tiempo de permanencia en el mismo, conforme a las reglamentaciones institucionales.</p>
+  `,
+  footer: "~ Ing. Sistemas"
+}
+---
+
+<Layout title={articleData.title}>
+  <Navbar client:load />
+  <Article articleData={articleData} />
+  <ScrollUpButton client:load />
+</Layout>

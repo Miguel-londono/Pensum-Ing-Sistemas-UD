@@ -1,0 +1,96 @@
+---
+import { ViewTransitions } from 'astro:transitions'
+
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<!doctype html>
+<html lang='es'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta
+      name='description'
+      content='Pensum de materias de Ingeniería de Sistemas de la Universidad Distrital Francisco José de Caldas'
+    />
+    <meta name='viewport' content='width=device-width' />
+    <meta name='generator' content={Astro.generator} />
+    <link rel='preconnect' href='https://fonts.googleapis.com' />
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
+    <link
+      href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'
+      rel='stylesheet'
+    />
+    <ViewTransitions/>
+    <title>{title}</title>
+  </head>
+  <body>
+    <h1 transition:name="titulo-universidad">
+      Universidad Distrital Francisco José de Caldas
+      <br>
+      <span>Plan de Estudios - Ingeniería de Sistemas</span>
+    </h1>
+    <slot />
+    <!-- wf -->
+    <img transition:name="imagen-fondo" id="fondo" src="/images/logo.svg" alt="">
+  </body>
+</html>
+
+<style is:global>
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    font-family: 'Montserrat';
+  }
+
+  body {
+    padding: 10px;
+  }
+
+  #fondo{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	z-index: -9999;
+	opacity: 0.2;
+	width: 80vw;
+	max-height: 90vh;
+  pointer-events: none;
+  }
+
+  @media screen and (max-width: 800px) {
+    body {
+      padding: 5px;
+    }
+  }
+</style>
+
+<style>
+  h1 {
+    text-align: center;
+  }
+  
+  h1 span {
+    font-weight: 500;
+  }
+
+  @media screen and (max-width: 800px) {
+
+    h1{
+      font-size: 1.4em;
+    }
+
+    h1 span{
+      font-size: 0.75em;
+    }
+    
+  }
+</style>

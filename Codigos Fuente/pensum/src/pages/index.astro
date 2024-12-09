@@ -1,0 +1,36 @@
+---
+import TablaPensum from '@/components/TablaPensum.astro'
+import Layout from '../layouts/Layout.astro'
+import BarraMateriasReact from '@/components/react/BarraMaterias.jsx'
+import ModalPDF from '@/components/ModalPDF.astro'
+---
+
+<Layout title="Pensum - Ingeniería de Sistemas">
+  <main>
+    
+    <TablaPensum/>
+  </main>
+  <BarraMateriasReact client:load />
+  <ModalPDF/>
+  <a target="_blank" href="https://sgral.udistrital.edu.co/xdata/ca/res_2023-077.pdf">Resolución N° 077 de 2023 por la cual se aprueba el nuevo plan de estudios para el proyecto curricular de Ingeniería de Sistemas.</a>
+  <!-- wf -->
+</Layout>
+
+<script>
+  //Mensaje de recomendación para imprimir el pensum
+  window.onbeforeprint = ()=>{
+    alert("Recomendamos usar una escala personalizada de 50 en los ajustes de impresión para imprimir el pensum en papel común.")
+  }
+</script>
+
+<style>
+  a{
+    color: #000;
+  }
+
+  main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>
